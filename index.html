@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Погода в Астане</title>
+</head>
+<body>
+    <h1>Погода в Астане</h1>
+    <div id="weather">
+        Загрузка погоды...
+    </div>
+
+    <script>
+        const apiKey = 'cc91582f7748f48cff26b8c37168a4e2';
+        const city = 'Astana';
+        const country = 'KZ';
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&units=metric&lang=ru&appid=${apiKey}`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const weatherDiv = document.getElementById('weather');
+                const temperature = data.main.temp;
+                const description = data.weather[0].description;
+                weatherDiv.innerHTML = `Температура: ${temperature}°C<br>Описание: ${description}`;
+            })
+            .catch(error => {
+                console.error('Ошибка получения данных о погоде:', error);
+                document.getElementById('weather').innerHTML = 'Не удалось загрузить данные о погоде.';
+            });
+    </script>
+</body>
+</html>
